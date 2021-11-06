@@ -20,7 +20,6 @@ func init() {
 func main() {
 	//Initialization variable configPath
 	flag.Parse()
-	log.Println("Start server...")
 
 	// server instance inicialization
 	config := api.NewConfig()
@@ -34,9 +33,5 @@ func main() {
 	server := api.New(config)
 
 	// api server start
-	err = server.Start()
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	log.Fatal(server.Start())
 }
