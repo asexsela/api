@@ -18,6 +18,10 @@ type Storage struct {
 	config *Config
 	//Database file descriptor
 	db *sql.DB
+	//Subfield for repo interfacing (model user)
+	userRepository *UserRepository
+	//Subfield for repo interfacing (model user)
+	articleRepository *ArticleRepository
 }
 
 //Storage Constructor
@@ -51,4 +55,32 @@ func (storage *Storage) Open() error {
 //Close connection method
 func (storage *Storage) Close() {
 	storage.db.Close()
+}
+
+//Public repo for User
+func (s *Storage) User() *UserRepository {
+
+	s.userRepository = &UserRepository{
+		storage: s,
+	}
+
+	if s.userRepository != nil {
+		return s.userRepository
+	}
+
+	return nil
+}
+
+//Public repo for Article
+func (s *Storage) Article() *ArticleRepository {
+
+	s.articleRepository = &ArticleRepository{
+		storage: s,
+	}
+
+	if s.articleRepository != nil {
+		return s.articleRepository
+	}
+
+	return nil
 }
